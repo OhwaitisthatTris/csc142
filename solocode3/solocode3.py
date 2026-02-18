@@ -47,53 +47,40 @@ Game_over = False
 
 while True:
 
-    # 7 - Check for and handle events
+
     for event in pygame.event.get():
-        # Clicked the close button? Quit pygame and end the program  
         if event.type == pygame.QUIT:
-            # if it is quit the game
+       
             pygame.quit()
             sys.exit()
-    
-    # 8 - Do any "per frame" actions
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+
+            if ballRect.collidepoint(mouse_x, mouse_y):
+             print("Ball clicked!")
+            score += 1
+   
     if (ballRect.left < 0) or (ballRect.right >= WINDOW_WIDTH):
-        xSpeed = -xSpeed  # reverse X direction
+        xSpeed = -xSpeed  
         bounceSound.play()
 
     if (ballRect.top < 0) or (ballRect.bottom >= WINDOW_HEIGHT):
-        ySpeed = -ySpeed  # reverse Y direction
+        ySpeed = -ySpeed  
         bounceSound.play()
 
-    # Update the rectangle of the ball, based on the speed in two directions
+   
     ballRect.left = ballRect.left + xSpeed
     ballRect.top = ballRect.top + ySpeed
 
-    # 9 - Clear the window before drawing it again
+ 
     window.fill(BLACK)
     
-    # 10 - Draw the window elements
+
     window.blit(ballImage, ballRect)
 
-    # 11 - Update the window
+ 
     pygame.display.update()
 
-    # 12 - Slow things down a bit
+
     clock.tick(FRAMES_PER_SECOND)  
 
-pygame.init()
-screen = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("Who can Draw the Best Text?")
-
-running = True
-while running:
-    screen.fill((0, 0, 0))  # Clear screen with black
-
-    draw_text(screen, "Hello, this is Tristan's Pygame!", 50, 50, (255, 255, 255), 32)
-
-    pygame.display.flip()  # Update the display
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-pygame.quit()
